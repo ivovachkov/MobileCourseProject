@@ -10,11 +10,11 @@ var app = app || {};
     });
 
     function navigateToArticle(e) {
-        var ref = window.open(e.data.links.mobile.href, '_blank', 'location=yes');
-        // close InAppBrowser after 5 seconds
-        setTimeout(function () {
-            ref.close();
-        }, 3000);
+        //var ref = window.open(e.data.links.mobile.href, '_blank', 'location=yes');
+        //// close InAppBrowser after 5 seconds
+        //setTimeout(function () {
+        //    ref.close();
+        //}, 3000);
 
         var newsLink = e.data.links.api.news.href;
                 
@@ -27,7 +27,6 @@ var app = app || {};
         httpRequest.getJSON(headlinesUrl + "?" + a.apiKey)
         .then(function (data) {
             viewModel.set("headlines", data.headlines);
-            console.log(data);
         });
     }
 

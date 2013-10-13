@@ -4,27 +4,27 @@
     var my_media = null;
     var mediaTimer = null;
 
-    function init(src) {
+    function playAudio(src) {
         // Create Media object from src
         my_media = new Media(src, onSuccess, onError);
         my_media.play();
 
         // Update my_media position every second
-        if (mediaTimer == null) {
-            mediaTimer = setInterval(function () {
-                my_media.getCurrentPosition(
-                    function (position) {
-                        if (position > -1) {
-                            setAudioPosition((position) + " sec");
-                        }
-                    },
-                    function (e) {
-                        console.log("Error getting pos=" + e);
-                        setAudioPosition("Error: " + e);
-                    }
-                );
-            }, 1000);
-        }
+        //if (mediaTimer == null) {
+        //    mediaTimer = setInterval(function () {
+        //        my_media.getCurrentPosition(
+        //            function (position) {
+        //                if (position > -1) {
+        //                    setAudioPosition((position) + " sec");
+        //                }
+        //            },
+        //            function (e) {
+        //                console.log("Error getting pos=" + e);
+        //                setAudioPosition("Error: " + e);
+        //            }
+        //        );
+        //    }, 1000);
+        //}
     }
 
     function pauseAudio() {
@@ -55,6 +55,8 @@
     }
 
     a.media = {
-        init: init
+        play: playAudio,
+        stop: stopAudio,
+        pause: pauseAudio
     };
 }(app));

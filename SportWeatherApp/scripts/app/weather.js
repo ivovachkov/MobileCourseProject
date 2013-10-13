@@ -34,12 +34,9 @@
                 if (results[0]) {
                     city = results[0].address_components[2].short_name;
                     country = results[0].address_components[4].short_name;
-                    console.log(city);
-                    console.log(country);
                     if (requestUrl.indexOf(city) == -1 && requestUrl.indexOf(country) == -1) {
                         requestUrl += (country + '/' + city + '.json');
                     }
-                    console.log(requestUrl);
                 }
                 else {
                     console.log("No results found");
@@ -55,15 +52,9 @@
 
     function init(e) {
         kendo.bind(e.view.element, viewModel);
-
-        console.log(requestUrl);
-
         httpRequest.getJSON(requestUrl)
         .then(function (data) {
-            console.log(data);
-
             if (data.response.error) {
-
                 navigator.notification.alert(data.response.error.description);
                 a.kendo.navigate('#index');
             }
@@ -79,6 +70,7 @@
             };
 
             viewModel.set("weatherInfo", vm);
+            a.camera.init();
         }, function (err) {
             navigator.notifications.alert(err);
         });

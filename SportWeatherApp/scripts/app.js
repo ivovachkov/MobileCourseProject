@@ -4,11 +4,14 @@ var app = app || {};
     document.addEventListener("deviceready", function() {        
         var kendoApp = new kendo.mobile.Application(document.body);
         a.kendo = kendoApp;
-        a.weather.locate();
-        var connectionType = a.connectionApi.getConnectionType();
-        console.log(connectionType);
-        if (connectionType == "WiFi connection") {
-            a.media.init("http://audio.ibeat.org/?ccm=/api/query/stream.m3u&f=m3u&ids=701");
-        }        
+        a.weather.locate(); 
+
+        a.connectionApi.getConnectionType();
+
+        document.addEventListener("offline", function () {
+            navigator.notification.alert("You don't have connection now");
+            navigator.notification.vibrate(1000);
+            //navigator.notification.beep(2);
+        }, false);
     });
 }(app));

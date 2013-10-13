@@ -2,6 +2,7 @@
 
 (function (a) {
     var states = null;
+    var songUrl = "http://audio.ibeat.org/?ccm=/api/query/stream.m3u&f=m3u&ids=701";
     function initStates() {
         states = {};
         states[Connection.UNKNOWN] = 'Unknown connection';
@@ -20,7 +21,20 @@
                 initStates();
             }
             var networkState = navigator.connection.type;
-            return states[networkState];
+            if (states[networkState] == "WiFi connection") {
+                a.media.play(songUrl);
+            }
+
+            //setInterval(function () {
+            //    networkState = navigator.connection.type;
+            //    console.log(states[networkState]);
+            //    if (states[networkState] == "WiFi connection") {
+            //        a.media.play(songUrl);
+            //    }
+            //    else {
+            //        a.media.stop();
+            //    }
+            //}, 3000);
         }
     }
     a.connectionApi = connectionAPI;

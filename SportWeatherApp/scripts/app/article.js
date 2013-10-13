@@ -12,7 +12,6 @@
 
         httpRequest.getJSON(requestUrl)
         .then(function (data) {
-            console.log(data);
             viewModel.set("articleInfo", data.headlines[0]);
         });
     }
