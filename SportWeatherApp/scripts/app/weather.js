@@ -1,7 +1,7 @@
 ﻿var app = app || {};
 
 (function (a) {
-    //var requestUrl = "http://api.wunderground.com/api/1e301851af3c4acc/conditions/q/BG/Sofia.json";
+    // http://api.wunderground.com/api/1e301851af3c4acc/conditions/q/BG/Sofia.json
     var requestUrl = "http://api.wunderground.com/api/1e301851af3c4acc/conditions/q/";
     var geocoder, city, country, watch;
 
@@ -9,7 +9,6 @@
         weatherInfo: {}
     });
 
-    //Get the latitude and the longitude;
     function successFunction(position) {
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
@@ -52,25 +51,59 @@
 
     function init(e) {
         kendo.bind(e.view.element, viewModel);
+
         httpRequest.getJSON(requestUrl)
         .then(function (data) {
+            var vm;
+            var images;
+
             if (data.response.error) {
                 navigator.notification.alert(data.response.error.description);
+                //navigator.notification.alert("We cannot provide information.");
                 a.kendo.navigate('#index');
             }
+            else if (data.response.results) {
+                var query = data.response.results[0].l;
+                requestUrl = "http://api.wunderground.com/api/1e301851af3c4acc/conditions";
+                requestUrl += (query + ".json");
 
-            var vm = {
-                weather: data.current_observation.weather,
-                temp: data.current_observation.temp_c,
-                icon: data.current_observation.icon_url,
-                feelslike: data.current_observation.feelslike_c,
-                city: data.current_observation.display_location.full,
-                wind: data.current_observation.wind_kph,
-                humidity: data.current_observation.relative_humidity
-            };
+                httpRequest.getJSON(requestUrl)
+                .then(function (data) {
+                    images = JSON.parse(localStorage.getItem("images" + data.current_observation.display_location.full));
+                    vm = {
+                        weather: data.current_observation.weather,
+                        temp: data.current_observation.temp_c,
+                        icon: data.current_observation.icon_url,
+                        feelslike: data.current_observation.feelslike_c,
+                        city: data.current_observation.display_location.full,
+                        wind: data.current_observation.wind_kph,
+                        humidity: data.current_observation.relative_humidity,
+                        images: images
+                    };
+                    viewModel.set("weatherInfo", vm);
+                    a.city = vm.city;
+                    //a.camera.init(vm.city);
+                });
+                //localStorage.setItem("state", "views/weather-view.html#weather-view");
+            }
+            else {
+                images = JSON.parse(localStorage.getItem("images" + data.current_observation.display_location.full));
+                vm = {
+                    weather: data.current_observation.weather,
+                    temp: data.current_observation.temp_c,
+                    icon: data.current_observation.icon_url,
+                    feelslike: data.current_observation.feelslike_c,
+                    city: data.current_observation.display_location.full,
+                    wind: data.current_observation.wind_kph,
+                    humidity: data.current_observation.relative_humidity,
+                    images: images
+                };
+                viewModel.set("weatherInfo", vm);
+                a.city = vm.city;
+                //a.camera.init(vm.city);
+                //localStorage.setItem("state", "views/weather-view.html#weather-view");
+            }
 
-            viewModel.set("weatherInfo", vm);
-            a.camera.init();
         }, function (err) {
             navigator.notifications.alert(err);
         });

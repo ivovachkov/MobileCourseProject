@@ -8,6 +8,7 @@
 </div>
 
 <script type="text/x-kendo-template" id="weatherTemplate">
+        <a data-role="touch" data-tap="app.camera.init" id="takePicBtn">Take a picture</a>
         <h2>Weather in #= data.city #</h2>
         <h3 id="weather">#: data.weather #</h3>
         <img src="#: data.icon #" width="70" />
@@ -15,5 +16,12 @@
         <p>Feels like: #= data.feelslike # C<sup>o</sup></p>
         <p>Wind: #= data.wind # km/h</p>
         <p>Humidity: #= data.humidity #</p>
-        <img id="picture" />
+        
+        
+        # if(data.images) { #
+            # for(i = 0; i < data.images.length; i++) { #
+                <img src="#: data.images[i] #" width="290" />
+        # } } #
+
+        <img id="picture" width="290" />
 </script>

@@ -17,9 +17,10 @@ var app = app || {};
         //}, 3000);
 
         var newsLink = e.data.links.api.news.href;
-                
-        a.kendo.navigate('views/article-view.html#article-view?url=' +
-            encodeURIComponent(newsLink));
+        var navigationUrl = 'views/article-view.html#article-view?url=' +
+            encodeURIComponent(newsLink);
+        localStorage.setItem("state", navigationUrl);
+        a.kendo.navigate(navigationUrl);
     }
     
     function init(e) {

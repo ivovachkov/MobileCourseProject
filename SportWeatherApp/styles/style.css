@@ -1,0 +1,38 @@
+#category-info h1{
+    text-align:center;
+}
+
+.headline{
+    border-bottom: 1px dotted #555;
+}
+
+.headline img,
+#articleContainer img,
+#weatherContainer img{
+    display: block;
+    margin: 0 auto;
+}
+
+#weatherContainer h3#weather{
+    text-align: center;
+}
+
+#mainHeading{
+    text-align: center;
+    color: #797e9b;
+}
+
+#article{
+    padding: 10px;
+}
+
+#weatherContainer img{
+    margin-bottom: 10px;
+}
+
+#takePicBtn{
+    background: #ccc;
+    padding: 20px 5px 5px 5px;
+    border-radius: 5px;
+    margin: 200px 0 0 15px;
+}
